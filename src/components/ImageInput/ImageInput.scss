@@ -1,0 +1,14 @@
+$stylin-bg-color: #282c34;
+
+.ImageInput {
+    background-color: $stylin-bg-color;
+    color: white;
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    
+    .fileUploader {
+        width: 50vw;
+        color: gray;
+    }
+}

@@ -1,0 +1,13 @@
+$tracau-banner-height: 3em;
+$stylin-bg-color: #282c34;
+
+.tracau-banner {
+    background-color: $stylin-bg-color;
+    height: $tracau-banner-height;
+    display: flex;
+    justify-content: flex-end;
+  
+    img {
+      height: $tracau-banner-height;
+    }
+  }

@@ -1,0 +1,24 @@
+$tracau-banner-height: 3em;
+$stylin-bg-color: #282c34;
+
+.InputText {
+    width: 100%;
+    background-color: $stylin-bg-color;
+    min-height: 100vh;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.main-content {
+    min-height: calc(100vh - #{$tracau-banner-height});
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.big-textbox {
+    width: 80%;
+    height: 20em;
+}
