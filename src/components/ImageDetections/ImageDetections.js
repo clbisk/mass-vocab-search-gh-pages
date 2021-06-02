@@ -15,6 +15,7 @@ class ImageDetections extends React.Component {
             });
             return (<ol>{defnsList}</ol>);
         } else if (detection.definition.translations.length > 0) {
+            if (detection.definition.translations[0] === '') return ("no definition found :(")
             const defnsList = detection.definition.translations.map(tr => {
                 return (<li>{tr.text}</li>);
             });
@@ -101,7 +102,7 @@ class ImageDetections extends React.Component {
                         placement='top'
                         overlay={popover}
                     >
-                        <div className="text-overlay" style={{ top: topProp, left: leftProp, height: heightProp, width: widthProp }}>{detection.description}</div>
+                        <div className="text-overlay" style={{ top: topProp, left: leftProp, height: heightProp, width: widthProp }}></div>
                     </OverlayTrigger>
                 </div>
             );
