@@ -27,7 +27,7 @@ class ImageDetections extends React.Component {
         // pages -> blocks -> paragraphs -> words
         const blocks = this.props.fullText.pages[0].blocks;
         const firstWord = blocks[0].paragraphs[0].words[0];
-        const secondWord = blocks[0].paragraphs[0].words[1] ? blocks[0].paragraphs[0].words[1] : (blocks[0].paragraphs[1].words[0] ? blocks[0].paragraphs[1].words[0] : blocks[1].paragraphs[0].words[0]);
+        const secondWord = blocks[0].paragraphs[0].words[1] ? blocks[0].paragraphs[0].words[1] : ((blocks[0].paragraphs[1] && blocks[0].paragraphs[1].words[0]) ? blocks[0].paragraphs[1].words[0] : blocks[1].paragraphs[0].words[0]);
         const firstWordBox = firstWord.boundingBox.vertices;
         const secondWordBox = secondWord.boundingBox.vertices;
 
