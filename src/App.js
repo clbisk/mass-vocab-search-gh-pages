@@ -1,8 +1,8 @@
 import React from 'react';
-import TextInput from './components/TextInput/TextInput';
-import ImageInput from './components/ImageInput/ImageInput';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.scss';
+import ImageInput from './components/ImageInput/ImageInput';
+import TextInput from './components/TextInput/TextInput';
 
 class App extends React.Component {
 
