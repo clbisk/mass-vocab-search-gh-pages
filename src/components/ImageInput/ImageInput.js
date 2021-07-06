@@ -15,6 +15,7 @@ class ImageInput extends React.Component {
     }
 
     changeImage(pictureFiles, pictureDataURLs) {
+        console.log("adding", pictureFiles);
         this.setState({ img_files: pictureFiles, img_type: '.jpg', imagesInput: true }, this.parseFiles);
     }
 
