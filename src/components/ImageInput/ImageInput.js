@@ -36,10 +36,13 @@ class ImageInput extends React.Component {
         const setImageProps = this.setImageProps;
 
         return new Promise(function (resolve) {
+            console.log("starting to read image");
             const reader = new FileReader();
             reader.addEventListener("load", event => {
                 var image = new Image();
                 image.src = event.target.result;
+                console.log("image source", image.src);
+                console.log("event", event);
 
                 image.onload = function() {
                     setImageProps(this.width, this.height);
@@ -52,8 +55,6 @@ class ImageInput extends React.Component {
     }
 
     async getOCR() {
-        console.log("state", this.state);
-
         return axios.post(`https://us-east4-true-bit-315318.cloudfunctions.net/documentTextDetection`, { img: this.state.img_buffers[0] }).then(result => {
             this.setState({ textDetections: result.data.textAnnotations, fullText: result.data.fullTextAnnotation }, this.getDefinitions);
         });
