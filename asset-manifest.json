@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/mass-vocab-search-gh-pages/static/css/main.dd01ae90.chunk.css",
-    "main.js": "/mass-vocab-search-gh-pages/static/js/main.39d55c5b.chunk.js",
-    "main.js.map": "/mass-vocab-search-gh-pages/static/js/main.39d55c5b.chunk.js.map",
+    "main.css": "/mass-vocab-search-gh-pages/static/css/main.36f3cc4f.chunk.css",
+    "main.js": "/mass-vocab-search-gh-pages/static/js/main.04763485.chunk.js",
+    "main.js.map": "/mass-vocab-search-gh-pages/static/js/main.04763485.chunk.js.map",
     "runtime-main.js": "/mass-vocab-search-gh-pages/static/js/runtime-main.45950a18.js",
     "runtime-main.js.map": "/mass-vocab-search-gh-pages/static/js/runtime-main.45950a18.js.map",
     "static/css/2.f94bdb3a.chunk.css": "/mass-vocab-search-gh-pages/static/css/2.f94bdb3a.chunk.css",
@@ -12,7 +12,7 @@
     "static/js/3.287e8b70.chunk.js.map": "/mass-vocab-search-gh-pages/static/js/3.287e8b70.chunk.js.map",
     "index.html": "/mass-vocab-search-gh-pages/index.html",
     "static/css/2.f94bdb3a.chunk.css.map": "/mass-vocab-search-gh-pages/static/css/2.f94bdb3a.chunk.css.map",
-    "static/css/main.dd01ae90.chunk.css.map": "/mass-vocab-search-gh-pages/static/css/main.dd01ae90.chunk.css.map",
+    "static/css/main.36f3cc4f.chunk.css.map": "/mass-vocab-search-gh-pages/static/css/main.36f3cc4f.chunk.css.map",
     "static/js/2.0e118194.chunk.js.LICENSE.txt": "/mass-vocab-search-gh-pages/static/js/2.0e118194.chunk.js.LICENSE.txt",
     "static/media/UploadIcon.svg": "/mass-vocab-search-gh-pages/static/media/UploadIcon.469126df.svg"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.45950a18.js",
     "static/css/2.f94bdb3a.chunk.css",
     "static/js/2.0e118194.chunk.js",
-    "static/css/main.dd01ae90.chunk.css",
-    "static/js/main.39d55c5b.chunk.js"
+    "static/css/main.36f3cc4f.chunk.css",
+    "static/js/main.04763485.chunk.js"
   ]
 }
