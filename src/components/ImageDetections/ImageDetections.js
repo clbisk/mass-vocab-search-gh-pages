@@ -15,7 +15,7 @@ class ImageDetections extends React.Component {
             });
             return (<ol>{defnsList}</ol>);
         } else if (detection.definition.translations.length > 0) {
-            if (detection.definition.translations[0] === '') return ("no definition found :(")
+            if (detection.definition.translations[0] === '' || detection.definition.translations[0] === undefined) return ("no definition found :(")
             const defnsList = detection.definition.translations.map(tr => {
                 return (<li>{tr.text}</li>);
             });

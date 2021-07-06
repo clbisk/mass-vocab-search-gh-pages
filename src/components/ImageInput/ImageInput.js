@@ -52,6 +52,8 @@ class ImageInput extends React.Component {
     }
 
     async getOCR() {
+        console.log(this.state);
+
         return axios.post(`https://us-east4-true-bit-315318.cloudfunctions.net/documentTextDetection`, { img: this.state.img_buffers[0] }).then(result => {
             this.setState({ textDetections: result.data.textAnnotations, fullText: result.data.fullTextAnnotation }, this.getDefinitions);
         });
