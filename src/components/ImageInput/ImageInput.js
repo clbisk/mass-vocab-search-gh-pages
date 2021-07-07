@@ -9,7 +9,7 @@ import DEEPL_API_KEY from '../../deepL_api_key.json';
 class ImageInput extends React.Component {
     constructor() {
         super();
-        this.state = { img_files: null, img_buffers: null, imagesInput: false, textDetections: null, definedDetections: null, detectionsLoaded: false, imageWidth: 0, imageHeight: 0 };
+        this.state = { img_files: null, img_buffers: null, imagesInput: false, imagesParsed: false, textDetections: null, definedDetections: null, detectionsLoaded: false, imageWidth: 0, imageHeight: 0 };
         this.changeImage = this.changeImage.bind(this);
         this.setImageProps = this.setImageProps.bind(this);
     }
@@ -24,7 +24,7 @@ class ImageInput extends React.Component {
         });
 
         Promise.all(promises).then(strings => {
-            this.setState({ img_buffers: strings }, this.getOCR);
+            this.setState({ img_buffers: strings, imagesParsed: true }, this.getOCR);
         });
     }
 
@@ -98,7 +98,7 @@ class ImageInput extends React.Component {
             <div className="ImageInput">
                 <ImageDetections detections={this.state.definedDetections} images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} />
             </div>
-        ) : this.state.imagesInput ? (
+        ) : this.state.imagesParsed ? (
             <div className="ImageInput">
                 Loading image text...
                 <div>
