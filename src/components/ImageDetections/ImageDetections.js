@@ -42,7 +42,7 @@ class ImageDetections extends React.Component {
         const firstWidth = firstXRight - firstXLeft;
         const firstHeight = firstYBottom - firstYTop;
 
-        if (secondXLeft > (firstXLeft + firstWidth)) {
+        if (secondXLeft > (firstXLeft + firstWidth) && secondYTop > (firstYTop + firstHeight)) {
             return "right side up";
         } else {
             console.log("the image was flipped at some point during detection and I simply don't know why :/");
