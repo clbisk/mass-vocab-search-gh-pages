@@ -43,6 +43,7 @@ class ImageInput extends React.Component {
 
                 image.onload = function() {
                     setImageProps(this.width, this.height);
+                    console.log("image", this.width, "x", this.height);            
                 }
 
                 resolve(reader.result);
