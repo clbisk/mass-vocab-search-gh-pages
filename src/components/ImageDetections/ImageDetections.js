@@ -78,6 +78,11 @@ class ImageDetections extends React.Component {
             var heightProp = height;
             var widthProp = width;
 
+            console.log("0 1\n3 2?", p1.x > p0.x);
+            console.log("2 3\n1 0?", p1.x < p0.x);
+            console.log("1 2\n0 3?", p1.x < p2.x);
+            console.log("3 0\n2 1?", p1.x > p2.x);
+
             if (rotation !== "right side up") {
                 if (rotation === "rotated left") {
                     topProp = xLeft;
