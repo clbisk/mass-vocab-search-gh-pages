@@ -102,7 +102,7 @@ class ImageInput extends React.Component {
             <div className="ImageInput">
                 Loading image text...
                 <div>
-                    <image scr={this.state.img_buffers[0]}></image>
+                    <img scr={this.state.img_buffers[0]}></img>
                 </div>
             </div>
         ) : (
