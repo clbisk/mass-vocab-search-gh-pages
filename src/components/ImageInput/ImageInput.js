@@ -95,9 +95,16 @@ class ImageInput extends React.Component {
 
     render() {
         return this.state.detectionsLoaded ? (
-            <div className="ImageInput"><ImageDetections detections={this.state.definedDetections} images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} /></div>
+            <div className="ImageInput">
+                <ImageDetections detections={this.state.definedDetections} images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} />
+            </div>
         ) : this.state.imagesInput ? (
-            <div className="ImageInput">Loading image text...</div>
+            <div className="ImageInput">
+                Loading image text...
+                <div>
+                    <image scr={this.state.img_buffers[0]}></image>
+                </div>
+            </div>
         ) : (
             <div className="ImageInput">
                <input type='file' id='single' onChange={this.changeImage} />
