@@ -14,10 +14,9 @@ class ImageInput extends React.Component {
         this.setImageProps = this.setImageProps.bind(this);
     }
 
-    changeImage(pictureFiles, pictureDataURLs) {
-        console.log("pictureDataURLs?", pictureDataURLs);
-        console.log("adding", pictureFiles);
-        this.setState({ img_files: pictureFiles, img_type: '.jpg', imagesInput: true }, this.parseFiles);
+    changeImage(event) {
+        console.log("adding", event.target.files);
+        this.setState({ img_files: event.target.files, img_type: '.jpg', imagesInput: true }, this.parseFiles);
     }
 
     async parseFiles() {
@@ -106,7 +105,7 @@ class ImageInput extends React.Component {
             <div className="ImageInput">Loading image text...</div>
         ) : (
             <div className="ImageInput">
-                <ImageUploader onChange={this.changeImage} imgExtension={['.jpg', '.png', '.pdf', '.tif', '.gif', '.bmp']} />
+               <input type='file' id='single' onChange={this.changeImage} />
             </div>
         );
     }
