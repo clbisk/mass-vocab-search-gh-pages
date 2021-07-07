@@ -15,12 +15,13 @@ class ImageInput extends React.Component {
     }
 
     changeImage(event) {
-        console.log("adding", event.target.files[0]);
-        this.setState({ img_files: event.target.files[0], img_type: '.jpg', imagesInput: true }, this.parseFiles);
+        console.log("adding", event.target.files);
+        this.setState({ img_files: event.target.files, img_type: '.jpg', imagesInput: true }, this.parseFiles);
     }
 
     async parseFiles() {
         const promises = this.state.img_files.map(img_file => {
+            console.log("image being parsed", img_file);
             return this.parseFile(img_file);
         });
 
