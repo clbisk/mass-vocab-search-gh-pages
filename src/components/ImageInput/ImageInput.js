@@ -20,7 +20,7 @@ class ImageInput extends React.Component {
     }
 
     async parseFiles() {
-        const promises = this.state.img_files.map(img_file => {
+        const promises = Array.from(this.state.img_files).map(img_file => {
             console.log("image being parsed", img_file);
             return this.parseFile(img_file);
         });
