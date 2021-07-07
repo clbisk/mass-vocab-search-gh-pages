@@ -15,6 +15,7 @@ class ImageInput extends React.Component {
     }
 
     changeImage(pictureFiles, pictureDataURLs) {
+        console.log("pictureDataURLs?", pictureDataURLs);
         console.log("adding", pictureFiles);
         this.setState({ img_files: pictureFiles, img_type: '.jpg', imagesInput: true }, this.parseFiles);
     }
@@ -56,6 +57,8 @@ class ImageInput extends React.Component {
     }
 
     async getOCR() {
+        console.log("state", this.state);
+
         return axios.post(`https://us-east4-true-bit-315318.cloudfunctions.net/documentTextDetection`, { img: this.state.img_buffers[0] }).then(result => {
             this.setState({ textDetections: result.data.textAnnotations, fullText: result.data.fullTextAnnotation }, this.getDefinitions);
         });
