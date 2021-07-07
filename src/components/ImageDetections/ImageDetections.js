@@ -78,10 +78,14 @@ class ImageDetections extends React.Component {
             var heightProp = height;
             var widthProp = width;
 
-            console.log("0 1\n3 2?", p1.x > p0.x);
-            console.log("2 3\n1 0?", p1.x < p0.x);
-            console.log("1 2\n0 3?", p1.x < p2.x);
-            console.log("3 0\n2 1?", p1.x > p2.x);
+            if (p1.x > p0.x && Math.abs(p1.x - p0.x) > Math.abs(p1.x - p3.x))
+                console.log("0 1\n3 2");
+            if (p1.x < p0.x && Math.abs(p1.x - p0.x) > Math.abs(p0.x - p3.x))
+                console.log("2 3\n1 0");
+            if (p2.x > p1.x && Math.abs(p2.x - p1.x) > Math.abs(p1.x - p0.x))
+                console.log("1 2\n0 3");
+            if (p1.x > p2.x && Math.abs(p1.x - p2.x) > Math.abs(p1.x - p0.x))
+                console.log("3 0\n2 1");
 
             if (rotation !== "right side up") {
                 if (rotation === "rotated left") {
