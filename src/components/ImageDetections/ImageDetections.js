@@ -1,11 +1,13 @@
 import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
+import useWindowDimsions from '../../useWindowDimensions';
 import './ImageDetections.scss';
 
 class ImageDetections extends React.Component {
 	constructor() {
 		super();
+		const { width, height } = useWindowDimsions();
 	}
 
 	renderDefinition(detection) {
@@ -14,12 +16,14 @@ class ImageDetections extends React.Component {
 				return (<li>{tr.text}</li>);
 			});
 			return (<ol>{defnsList}</ol>);
+
 		} else if (detection.definition.translations.length > 0) {
 			if (detection.definition.translations[0] === '' || detection.definition.translations[0] === undefined) return ("no definition found :(")
 			const defnsList = detection.definition.translations.map(tr => {
 				return (<li>{tr.text}</li>);
 			});
 			return (<ol>{defnsList}</ol>);
+
 		} else return ("no definition found :(");
 	}
 
@@ -74,7 +78,7 @@ class ImageDetections extends React.Component {
 
             var topProp = yTop;
             var leftProp = xLeft;
-            var bottomProp = height;
+            var heightProp = height;
             var widthProp = width;
 
 			if (rotation !== "right side up") {
@@ -88,18 +92,18 @@ class ImageDetections extends React.Component {
 
 				if (rotation === "rotated right") {
 					console.log("correcting right rotation");
-					topProp = Math.min(p3.y, p0.y);
-					leftProp = Math.min(p3.x, p2.x);
-					bottomProp = Math.max(p2.y, p1.y);
-					rightProp = Math.max(p0.x, p1.x);
+					topProp = xLeft;
+                    leftProp = this.props.imageWidth - yBottom;
+                    heightProp = xRight - xLeft;
+                    widthProp = yBottom - yTop;
 				}
 
 				if (rotation === "upside-down") {
 					console.log("correcting upside-down rotation");
-					topProp = Math.min(p3.y, p2.y);
-					leftProp = Math.min(p1.x, p2.x);
-					bottomProp = Math.max(p1.y, p0.y);
-					rightProp = Math.max(p0.x, p3.x);
+					topProp = xLeft;
+                    leftProp = this.props.imageWidth - yBottom;
+                    heightProp = xRight - xLeft;
+                    widthProp = yBottom - yTop;
 				}
 			}
 
@@ -112,6 +116,11 @@ class ImageDetections extends React.Component {
 				</Popover>
 			);
 
+			const adjustedTop = "calc(" + topProp + " * " + this.props.imageHeight + ")";
+			const adjustedLeft = "calc(" + leftProp + " * " + this.props.imageWidth + ")";
+			const adjustedHeight = "calc(" + heightProp + " * " + this.props.imageHeight + ")";
+			const adjustedWidth = "calc(" + widthProp + " * " + this.props.imageWidth + ")";
+
 			return (
 				<div key={detection.description + topProp}>
 					<OverlayTrigger
@@ -119,7 +128,7 @@ class ImageDetections extends React.Component {
 						placement='top'
 						overlay={popover}
 					>
-						<div className="text-overlay" style={{ top: topProp, left: leftProp, height: heightProp, width: widthProp }}></div>
+						<div className="text-overlay" style={{ top: adjustedTop, left: adjustedLeft, height: adjustedHeight, width: adjustedWidth }}></div>
 					</OverlayTrigger>
 				</div>
 			);
@@ -133,7 +142,7 @@ class ImageDetections extends React.Component {
 			<div className="ImageDetections">
 				<div className="img-box">
 					{this.renderDetectionsOnImage()}
-					<img src={URL.createObjectURL(this.props.images[0])} width={this.props.imageWidth} height={this.props.imageHeight} />
+					<img src={URL.createObjectURL(this.props.images[0])} width={"calc(" + this.props.imageWidth + " * 100vw)"} height={"calc(" + this.props.imageHeight + " * 100vh)"} />
 				</div>
 			</div>
 		);
