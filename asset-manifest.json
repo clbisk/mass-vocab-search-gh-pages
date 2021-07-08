@@ -1,26 +1,22 @@
 {
   "files": {
-    "main.css": "/mass-vocab-search-gh-pages/static/css/main.752953d2.chunk.css",
-    "main.js": "/mass-vocab-search-gh-pages/static/js/main.d92b566e.chunk.js",
-    "main.js.map": "/mass-vocab-search-gh-pages/static/js/main.d92b566e.chunk.js.map",
-    "runtime-main.js": "/mass-vocab-search-gh-pages/static/js/runtime-main.45950a18.js",
-    "runtime-main.js.map": "/mass-vocab-search-gh-pages/static/js/runtime-main.45950a18.js.map",
-    "static/css/2.f94bdb3a.chunk.css": "/mass-vocab-search-gh-pages/static/css/2.f94bdb3a.chunk.css",
-    "static/js/2.bf1db3ff.chunk.js": "/mass-vocab-search-gh-pages/static/js/2.bf1db3ff.chunk.js",
-    "static/js/2.bf1db3ff.chunk.js.map": "/mass-vocab-search-gh-pages/static/js/2.bf1db3ff.chunk.js.map",
-    "static/js/3.287e8b70.chunk.js": "/mass-vocab-search-gh-pages/static/js/3.287e8b70.chunk.js",
-    "static/js/3.287e8b70.chunk.js.map": "/mass-vocab-search-gh-pages/static/js/3.287e8b70.chunk.js.map",
+    "main.css": "/mass-vocab-search-gh-pages/static/css/main.71f885e2.chunk.css",
+    "main.js": "/mass-vocab-search-gh-pages/static/js/main.b5b9a7f7.chunk.js",
+    "main.js.map": "/mass-vocab-search-gh-pages/static/js/main.b5b9a7f7.chunk.js.map",
+    "runtime-main.js": "/mass-vocab-search-gh-pages/static/js/runtime-main.b719b7e0.js",
+    "runtime-main.js.map": "/mass-vocab-search-gh-pages/static/js/runtime-main.b719b7e0.js.map",
+    "static/js/2.6ee2b6a6.chunk.js": "/mass-vocab-search-gh-pages/static/js/2.6ee2b6a6.chunk.js",
+    "static/js/2.6ee2b6a6.chunk.js.map": "/mass-vocab-search-gh-pages/static/js/2.6ee2b6a6.chunk.js.map",
+    "static/js/3.774ecf14.chunk.js": "/mass-vocab-search-gh-pages/static/js/3.774ecf14.chunk.js",
+    "static/js/3.774ecf14.chunk.js.map": "/mass-vocab-search-gh-pages/static/js/3.774ecf14.chunk.js.map",
     "index.html": "/mass-vocab-search-gh-pages/index.html",
-    "static/css/2.f94bdb3a.chunk.css.map": "/mass-vocab-search-gh-pages/static/css/2.f94bdb3a.chunk.css.map",
-    "static/css/main.752953d2.chunk.css.map": "/mass-vocab-search-gh-pages/static/css/main.752953d2.chunk.css.map",
-    "static/js/2.bf1db3ff.chunk.js.LICENSE.txt": "/mass-vocab-search-gh-pages/static/js/2.bf1db3ff.chunk.js.LICENSE.txt",
-    "static/media/UploadIcon.svg": "/mass-vocab-search-gh-pages/static/media/UploadIcon.469126df.svg"
+    "static/css/main.71f885e2.chunk.css.map": "/mass-vocab-search-gh-pages/static/css/main.71f885e2.chunk.css.map",
+    "static/js/2.6ee2b6a6.chunk.js.LICENSE.txt": "/mass-vocab-search-gh-pages/static/js/2.6ee2b6a6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.45950a18.js",
-    "static/css/2.f94bdb3a.chunk.css",
-    "static/js/2.bf1db3ff.chunk.js",
-    "static/css/main.752953d2.chunk.css",
-    "static/js/main.d92b566e.chunk.js"
+    "static/js/runtime-main.b719b7e0.js",
+    "static/js/2.6ee2b6a6.chunk.js",
+    "static/css/main.71f885e2.chunk.css",
+    "static/js/main.b5b9a7f7.chunk.js"
   ]
 }
