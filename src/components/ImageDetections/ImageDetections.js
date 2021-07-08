@@ -66,34 +66,34 @@ class ImageDetections extends React.Component {
 
 			var topProp = Math.min(p0.y, p1.y);
 			var leftProp = Math.min(p0.x, p3.x);
-			var heightProp = Math.max(p3.y, p2.y) - topProp;
-			var widthProp = Math.max(p1.x, p2.x) - leftProp;
+			var bottomProp = Math.max(p3.y, p2.y)
+			var rightProp = Math.max(p1.x, p2.x)
 
-			// if (rotation !== "right side up") {
-			// 	if (rotation === "rotated left") {
-			// 		console.log("correcting left rotation");
-			// 		topProp = Math.min(p1.y, p2.y);
-			// 		leftProp = Math.min(p0.x, p1.x);
-			// 		heightProp = Math.max(p3.y, p0.y) - topProp;
-			// 		widthProp = Math.max(p3.x, p2.x) - leftProp;
-			// 	}
+			if (rotation !== "right side up") {
+				if (rotation === "rotated left") {
+					console.log("correcting left rotation");
+					topProp = Math.min(p0.x, p1.x);
+					leftProp = Math.max(p0.y, p3.y);
+					bottomProp = Math.max(p3.x, p2.x);
+					rightProp = Math.min(p1.y, p2.y);
+				}
 
-			// 	if (rotation === "rotated right") {
-			// 		console.log("correcting right rotation");
-			// 		topProp = Math.min(p3.y, p0.y);
-			// 		leftProp = Math.min(p3.x, p2.x);
-			// 		heightProp = Math.max(p2.y, p1.y) - topProp;
-			// 		widthProp = Math.max(p0.x, p1.x) - leftProp;
-			// 	}
+				if (rotation === "rotated right") {
+					console.log("correcting right rotation");
+					topProp = Math.min(p3.y, p0.y);
+					leftProp = Math.min(p3.x, p2.x);
+					bottomProp = Math.max(p2.y, p1.y);
+					rightProp = Math.max(p0.x, p1.x);
+				}
 
-			// 	if (rotation === "upside-down") {
-			// 		console.log("correcting upside-down rotation");
-			// 		topProp = Math.min(p3.y, p2.y);
-			// 		leftProp = Math.min(p1.x, p2.x);
-			// 		heightProp = Math.max(p1.y, p0.y) - topProp;
-			// 		widthProp = Math.max(p0.x, p3.x) - leftProp;
-			// 	}
-			// }
+				if (rotation === "upside-down") {
+					console.log("correcting upside-down rotation");
+					topProp = Math.min(p3.y, p2.y);
+					leftProp = Math.min(p1.x, p2.x);
+					bottomProp = Math.max(p1.y, p0.y);
+					rightProp = Math.max(p0.x, p3.x);
+				}
+			}
 
 			const popover = (
 				<Popover className="dynamic-text-size" id={detection.description} key={detection.description + topProp + "-popover"}>
@@ -111,7 +111,7 @@ class ImageDetections extends React.Component {
 						placement='top'
 						overlay={popover}
 					>
-						<div className="text-overlay" style={{ top: topProp, left: leftProp, height: heightProp, width: widthProp }}></div>
+						<div className="text-overlay" style={{ top: topProp, left: leftProp, height: bottomProp - topProp, width: rightProp - leftProp }}></div>
 					</OverlayTrigger>
 				</div>
 			);
