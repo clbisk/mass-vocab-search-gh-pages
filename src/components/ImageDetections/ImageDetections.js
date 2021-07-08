@@ -64,18 +64,26 @@ class ImageDetections extends React.Component {
             const p2 = detection.boundingPoly.vertices[3];
             const p3 = detection.boundingPoly.vertices[2];
 
-			var topProp = Math.min(p0.y, p1.y);
-			var leftProp = Math.min(p0.x, p3.x);
-			var bottomProp = Math.max(p3.y, p2.y)
-			var rightProp = Math.max(p1.x, p2.x)
+			const yTop = Math.min(p0.y, p1.y, p2.y, p3.y);
+            const xLeft = Math.min(p0.x, p1.x, p2.x, p3.x);
+            const yBottom = Math.max(p0.y, p1.y, p2.y, p3.y);
+            const xRight = Math.max(p0.x, p1.x, p2.x, p3.x);
+
+            const height = yBottom - yTop;
+            const width = xRight - xLeft;
+
+            var topProp = yTop;
+            var leftProp = xLeft;
+            var bottomProp = height;
+            var widthProp = width;
 
 			if (rotation !== "right side up") {
 				if (rotation === "rotated left") {
 					console.log("correcting left rotation");
-					topProp = Math.min(p0.x, p1.x);
-					leftProp = Math.max(p0.y, p3.y);
-					bottomProp = Math.max(p3.x, p2.x);
-					rightProp = Math.min(p1.y, p2.y);
+					topProp = xLeft;
+                    leftProp = this.props.imageWidth - yBottom;
+                    heightProp = xRight - xLeft;
+                    widthProp = yBottom - yTop;
 				}
 
 				if (rotation === "rotated right") {
@@ -111,7 +119,7 @@ class ImageDetections extends React.Component {
 						placement='top'
 						overlay={popover}
 					>
-						<div className="text-overlay" style={{ top: topProp, left: leftProp, height: bottomProp - topProp, width: rightProp - leftProp }}></div>
+						<div className="text-overlay" style={{ top: topProp, left: leftProp, height: heightProp, width: widthProp }}></div>
 					</OverlayTrigger>
 				</div>
 			);
