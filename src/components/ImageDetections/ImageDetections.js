@@ -79,7 +79,7 @@ class ImageDetections extends React.Component {
 			}
 
 			const popover = (
-				<Popover className="dynamic-text-size" id={detection.description} key={detection.description + yTop + "-popover"}>
+				<Popover className="dynamic-text-size" id={detection.description} key={detection.description + topProp + "-popover"}>
 					<Popover.Title className="large-dynamic-text-size">{detection.description}</Popover.Title>
 					<Popover.Content>
 						{this.renderDefinition(detection)}
@@ -88,7 +88,7 @@ class ImageDetections extends React.Component {
 			);
 
 			return (
-				<div key={detection.description + yTop}>
+				<div key={detection.description + topProp}>
 					<OverlayTrigger
 						key={detection.description}
 						placement='top'
