@@ -53,30 +53,17 @@ class ImageDetections extends React.Component {
 		const rotation = this.detectImageRotation();
 
 		const detections = this.props.detections.map((detection, i) => {
-			const p0 = detection.boundingPoly.vertices[0];
-			const p1 = detection.boundingPoly.vertices[1];
-			const p2 = detection.boundingPoly.vertices[3];
-			const p3 = detection.boundingPoly.vertices[2];
-
-			const yTop = Math.min(p0.y, p1.y, p2.y, p3.y);
-			const xLeft = Math.min(p0.x, p1.x, p2.x, p3.x);
-			const yBottom = Math.max(p0.y, p1.y, p2.y, p3.y);
-			const xRight = Math.max(p0.x, p1.x, p2.x, p3.x);
-
-			const height = yBottom - yTop;
-			const width = xRight - xLeft;
-
-			var topProp = yTop;
-			var leftProp = xLeft;
-			var heightProp = height;
-			var widthProp = width;
+			var topProp = Math.min(p0.y, p1.y);
+			var leftProp = Math.min(p0.x, p3.x);
+			var heightProp = Math.max(p3.y, p2.y) - topProp;
+			var widthProp = Math.max(p1.x, p2.x) - leftProp;
 
 			if (rotation !== "right side up") {
 				if (rotation === "rotated left") {
-					topProp = xLeft;
-					leftProp = this.props.imageWidth - yBottom;
-					heightProp = xRight - xLeft;
-					widthProp = yBottom - yTop;
+					topProp = Math.min(p1.y, p2.y);
+					leftProp = Math.min(p0.x, p1.x);
+					heightProp = Math.max(p3.y, p0.y) - topProp;
+					widthProp = Math.max(p3.x, p2.x) - leftProp;
 				}
 			}
 
