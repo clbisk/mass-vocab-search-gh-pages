@@ -25,6 +25,12 @@ class ImageDetections extends React.Component {
 
 	detectImageRotation() {
 		// pages -> blocks -> paragraphs -> words
+		const detection = this.props.detections[0];
+		const p0 = detection.boundingPoly.vertices[0];
+		const p1 = detection.boundingPoly.vertices[1];
+		const p2 = detection.boundingPoly.vertices[3];
+		const p3 = detection.boundingPoly.vertices[2];
+
 		if (p1.x > p0.x && Math.abs(p1.x - p0.x) > Math.abs(p1.x - p3.x)) {
 			console.log("0 1\n3 2");
 			return "right side up";
@@ -53,6 +59,11 @@ class ImageDetections extends React.Component {
 		const rotation = this.detectImageRotation();
 
 		const detections = this.props.detections.map((detection, i) => {
+			const p0 = detection.boundingPoly.vertices[0];
+            const p1 = detection.boundingPoly.vertices[1];
+            const p2 = detection.boundingPoly.vertices[3];
+            const p3 = detection.boundingPoly.vertices[2];
+
 			var topProp = Math.min(p0.y, p1.y);
 			var leftProp = Math.min(p0.x, p3.x);
 			var heightProp = Math.max(p3.y, p2.y) - topProp;
