@@ -1,13 +1,11 @@
 import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import useWindowDimsions from '../../useWindowDimensions';
 import './ImageDetections.scss';
 
 class ImageDetections extends React.Component {
 	constructor() {
 		super();
-		const { width, height } = useWindowDimsions();
 	}
 
 	renderDefinition(detection) {
