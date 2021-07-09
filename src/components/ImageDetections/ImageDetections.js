@@ -114,10 +114,14 @@ class ImageDetections extends React.Component {
 				</Popover>
 			);
 
-			const adjustedTop = "calc(" + topProp + " * " + this.props.imageHeight + ")";
-			const adjustedLeft = "calc(" + leftProp + " * " + this.props.imageWidth + ")";
-			const adjustedHeight = "calc(" + heightProp + " * " + this.props.imageHeight + ")";
-			const adjustedWidth = "calc(" + widthProp + " * " + this.props.imageWidth + ")";
+			const adjustedImageHeight = window.innerHeight;
+			const adjustedImageWidth = window.innerHeight * (this.props.imageWidth / this.props.imageHeight);
+
+			const adjustedTop = (topProp / this.props.imageHeight) * adjustedImageHeight;
+			const adjustedLeft = (leftProp / this.props.imageWidth) * adjustedImageWidth;
+			const adjustedHeight = (heightProp / this.props.imageHeight) * adjustedImageHeight;
+			const adjustedWidth = (widthProp / this.props.imageWidth) * adjustedImageWidth;
+			console.log("adjustedLeft", adjustedLeft, "adjustedWidth", adjustedWidth);
 
 			return (
 				<div key={detection.description + topProp}>
@@ -140,7 +144,7 @@ class ImageDetections extends React.Component {
 			<div className="ImageDetections">
 				<div className="img-box">
 					{this.renderDetectionsOnImage()}
-					<img src={URL.createObjectURL(this.props.images[0])} width={"calc(" + this.props.imageWidth + " * 100vw)"} height={"calc(" + this.props.imageHeight + " * 100vh)"} />
+					<img src={URL.createObjectURL(this.props.images[0])} height={window.innerHeight} top="0px" />
 				</div>
 			</div>
 		);

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React from 'react';
-import ImageUploader from 'react-images-upload';
 import ImageDetections from '../ImageDetections/ImageDetections';
 import './ImageInput.scss';
 import YANDEX_API_KEY from '../../yandex_key.json';
@@ -102,12 +101,12 @@ class ImageInput extends React.Component {
             <div className="ImageInput">
                 Loading image text...
                 <div>
-                    <img src={this.state.img_buffers[0]} height="50vh"></img>
+                    <img src={this.state.img_buffers[0]} height={0.5 * window.innerHeight}></img>
                 </div>
             </div>
         ) : (
             <div className="ImageInput">
-               <input type='file' id='single' onChange={this.changeImage} />
+               <div><input type='file' id='single' onChange={this.changeImage} /></div>
             </div>
         );
     }

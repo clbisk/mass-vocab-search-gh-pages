@@ -6,9 +6,5 @@ $stylin-bg-color: #282c34;
     display: flex;
     min-height: 100vh;
     justify-content: center;
-    
-    .fileUploader {
-        width: 50vw;
-        color: gray;
-    }
+    flex-direction: column;
 }
