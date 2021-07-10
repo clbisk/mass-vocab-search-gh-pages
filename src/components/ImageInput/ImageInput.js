@@ -42,7 +42,6 @@ class ImageInput extends React.Component {
 
                 image.onload = function() {
                     setImageProps(this.width, this.height);
-                    console.log("image", this.width, "x", this.height);            
                 }
 
                 resolve(reader.result);
@@ -65,17 +64,61 @@ class ImageInput extends React.Component {
             const text = detection.description.replace(punctuation, "").toLowerCase();
             if (text.length === 0) return;
 
-            return axios.get(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${YANDEX_API_KEY.key}&lang=ru-en&text=${text}`).then(result => {
-                Object.assign(detection, { definition: result.data });
+            return axios.get(`https://en.wiktionary.org/api/rest_v1/page/definition/${text}?redirect=false`).then(result => {
+                const partOfSpeech = result.data.ru[0].partOfSpeech;
+
+                var root = null;
+                const rootTag = 'of <span class="form-of-definition-link"><i class="Cyrl mention" lang="ru"><a rel="mw:WikiLink" href="/wiki/';
+                const rootDetailTag = '<span class="form-of-definition use-with-mention';
+                const letterTag = 'Letter "<span';
+                const defs = result.data.ru.map(item => {
+                    const innerDefs = item.definitions;
+                    const innerDef = innerDefs.map(innerItem => {
+                        const def = innerItem.definition;
+                        const hasRoot = def.indexOf(rootTag);
+                        if (hasRoot !== -1) {
+                            const rootStart = innerDefs[0].definition.slice(hasRoot + rootTag.length);
+                            root = rootStart.slice(0, rootStart.indexOf('#Russian'));
+                            return;
+                        }
+                        const isDetail = def.indexOf(rootDetailTag);
+                        const isLetter = def.indexOf(letterTag);
+                        if (isDetail === -1 || isLetter === -1) return;
+                        return def;
+                    });
+
+                    return innerDef;
+                });
+
+                Object.assign(detection, {root: partOfSpeech, definitions: defs.filter(val => val !== undefined), root: root});
                 return detection;
+
+            }).catch(function(error) {
+                //definition not found
+                if (error.response.status === 404) return;
+
+                console.error(error);
             });
         });
 
         Promise.all(defnPromises).then(results => {
+            // console.log("wiktionary results", results);
             const searchAgainPromises = results.map(detection => {
                 if (detection === undefined) return;
 
-                if (detection.def === undefined || detection.def.length === 0) {
+                if (detection.root !== null) {
+                    return axios.get(`https://en.wiktionary.org/api/rest_v1/page/definition/${detection.root}?redirect=false`).then(result => {
+                        Object.assign(detection, { rootDefinitions: result });
+                        return detection;
+                    }).catch(function(error) {
+                        //definition not found
+                        if (error.response.status === 404) return;
+                        
+                        console.error(error);
+                    });
+                }
+
+                if (detection.definitions === undefined) {
                     const punctuation = /[.,/#!$%^&*;:{}=\-_`~()]/g;
                     const text = detection.description.replace(punctuation, "").toLowerCase();
 
@@ -87,6 +130,7 @@ class ImageInput extends React.Component {
             })
 
             Promise.all(searchAgainPromises).then(results => {
+                // console.log("wiktionary + deepl results", results.filter(val => val !== undefined));
                 this.setState({ definedDetections: results.filter(val => val !== undefined), detectionsLoaded: true });
             });
         })

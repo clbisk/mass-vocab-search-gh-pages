@@ -9,11 +9,15 @@ class ImageDetections extends React.Component {
 	}
 
 	renderDefinition(detection) {
-		if (detection.definition.def && detection.definition.def.length > 0) {
-			const defnsList = detection.definition.def[0].tr.map(tr => {
-				return (<li>{tr.text}</li>);
+		if (detection.definitions) {
+			const defnsList = detection.definitions.map(defs => {
+				defs.map(def => {
+					if (def === undefined) return;
+					console.log("def", def);
+					return (<li>{def}</li>);
+				})
 			});
-			return (<ol>{defnsList}</ol>);
+			return (<><div className="part-of-speech">{detection.partOfSpeech}</div><ol>{defnsList}</ol></>);
 
 		} else if (detection.definition.translations.length > 0) {
 			if (detection.definition.translations[0] === '' || detection.definition.translations[0] === undefined) return ("no definition found :(")
@@ -34,7 +38,6 @@ class ImageDetections extends React.Component {
 		const p3 = detection.boundingPoly.vertices[2];
 
 		if (p1.x > p0.x && Math.abs(p1.x - p0.x) > Math.abs(p1.x - p3.x)) {
-			console.log("0 1\n3 2");
 			return "right side up";
 		}
 		
@@ -46,7 +49,6 @@ class ImageDetections extends React.Component {
 			}
 				
 			if (p2.x > p1.x && Math.abs(p2.x - p1.x) > Math.abs(p1.x - p0.x)) {
-				console.log("1 2\n0 3");
 				return "rotated left";
 			}
 				
@@ -81,7 +83,6 @@ class ImageDetections extends React.Component {
 
 			if (rotation !== "right side up") {
 				if (rotation === "rotated left") {
-					console.log("correcting left rotation");
 					topProp = xLeft;
                     leftProp = this.props.imageWidth - yBottom;
                     heightProp = xRight - xLeft;
@@ -121,7 +122,6 @@ class ImageDetections extends React.Component {
 			const adjustedLeft = (leftProp / this.props.imageWidth) * adjustedImageWidth;
 			const adjustedHeight = (heightProp / this.props.imageHeight) * adjustedImageHeight;
 			const adjustedWidth = (widthProp / this.props.imageWidth) * adjustedImageWidth;
-			console.log("adjustedLeft", adjustedLeft, "adjustedWidth", adjustedWidth);
 
 			return (
 				<div key={detection.description + topProp}>
