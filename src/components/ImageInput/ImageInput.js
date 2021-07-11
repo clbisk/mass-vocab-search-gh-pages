@@ -1,9 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 import ImageDetections from '../ImageDetections/ImageDetections';
+import { searchDefinitions } from './DefinitionSearch';
 import './ImageInput.scss';
-import YANDEX_API_KEY from '../../yandex_key.json';
-import DEEPL_API_KEY from '../../deepL_api_key.json';
 
 class ImageInput extends React.Component {
     constructor() {
@@ -58,38 +57,8 @@ class ImageInput extends React.Component {
     }
 
     async getDefinitions() {
-        const defnPromises = this.state.textDetections.map((detection, i) => {
-            if (i === 0) return;    //skip the complete text one
-
-            const punctuation = /[.,/#!$%^&*;:{}=\-_`~()]/g;
-            const text = detection.description.replace(punctuation, "").toLowerCase();
-            if (text.length === 0) return;
-
-            return axios.get(`https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${YANDEX_API_KEY.key}&lang=ru-en&text=${text}`).then(result => {
-                Object.assign(detection, { definition: result.data });
-                return detection;
-            });
-        });
-
-        Promise.all(defnPromises).then(results => {
-            const searchAgainPromises = results.map(detection => {
-                if (detection === undefined) return;
-
-                if (detection.def === undefined || detection.def.length === 0) {
-                    const punctuation = /[.,/#!$%^&*;:{}=\-_`~()]/g;
-                    const text = detection.description.replace(punctuation, "").toLowerCase();
-
-                    return axios.get(`https://api-free.deepl.com/v2/translate?auth_key=${DEEPL_API_KEY.key}&text=${text}&target_lang=EN`).then(defn => {
-                        Object.assign(detection, { definition: defn.data });
-                        return detection;
-                    });
-                } else { return detection }
-            })
-
-            Promise.all(searchAgainPromises).then(results => {
-                this.setState({ definedDetections: results.filter(val => val !== undefined), detectionsLoaded: true });
-            });
-        })
+        const results = searchDefinitions(this.state.textDetections);
+        this.setState({ definedDetections: results, detectionsLoaded: true });
     }
 
     render() {
