@@ -2,9 +2,12 @@ import axios from "axios";
 import YANDEX_API_KEY from '../../yandex_key.json';
 import DEEPL_API_KEY from '../../deepL_api_key.json';
 
-const lemmatizeUrl: String = 'https://us-east4-true-bit-315318.cloudfunctions.net/lemmatize';
+const lemmatizeUrl: string = 'https://us-east4-true-bit-315318.cloudfunctions.net/lemmatize';
 
-function searchDefinitions(detections: Array<any>) {
+async function searchDefinitions(detections: Array<any>) {
+    // test lemmatize
+    lemmatize(detections);
+
     const defnPromises = detections.map((detection, i) => {
         if (i === 0) return;    //skip the complete text one
 
@@ -37,6 +40,13 @@ function searchDefinitions(detections: Array<any>) {
             return results.filter(val => val !== undefined);
         });
     })
+}
+
+function lemmatize(detections: Array<any>) {
+    return axios.post(lemmatizeUrl, { text: detections[0].description }).then(result => {
+        console.log(result);
+        return result;
+    });
 }
 
 export { searchDefinitions }

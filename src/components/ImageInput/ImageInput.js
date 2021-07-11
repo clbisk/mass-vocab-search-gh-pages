@@ -41,7 +41,7 @@ class ImageInput extends React.Component {
 
                 image.onload = function() {
                     setImageProps(this.width, this.height);
-                    console.log("image", this.width, "x", this.height);            
+                    // console.log("image", this.width, "x", this.height);            
                 }
 
                 resolve(reader.result);
@@ -57,8 +57,9 @@ class ImageInput extends React.Component {
     }
 
     async getDefinitions() {
-        const results = searchDefinitions(this.state.textDetections);
-        this.setState({ definedDetections: results, detectionsLoaded: true });
+        searchDefinitions(this.state.textDetections).then(results => {
+            this.setState({ definedDetections: results, detectionsLoaded: true });
+        });
     }
 
     render() {

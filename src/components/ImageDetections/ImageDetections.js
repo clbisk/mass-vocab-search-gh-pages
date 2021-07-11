@@ -11,16 +11,16 @@ class ImageDetections extends React.Component {
 	renderDefinition(detection) {
 		if (detection.definition.def && detection.definition.def.length > 0) {
 			const defnsList = detection.definition.def[0].tr.map(tr => {
-				return (<li>{tr.text}</li>);
+				return (<li key={tr.text + detection.boundingPoly.vertices[0]}>{tr.text}</li>);
 			});
-			return (<ol>{defnsList}</ol>);
+			return (<ol key={detection.description + detection.boundingPoly.vertices[0] + "list"}>{defnsList}</ol>);
 
 		} else if (detection.definition.translations.length > 0) {
 			if (detection.definition.translations[0] === '' || detection.definition.translations[0] === undefined) return ("no definition found :(")
 			const defnsList = detection.definition.translations.map(tr => {
-				return (<li>{tr.text}</li>);
+				return (<li key={tr.text + detection.boundingPoly.vertices[0]}>{tr.text}</li>);
 			});
-			return (<ol>{defnsList}</ol>);
+			return (<ol key={detection.description + detection.boundingPoly.vertices[0] + "list"}>{defnsList}</ol>);
 
 		} else return ("no definition found :(");
 	}
@@ -34,7 +34,7 @@ class ImageDetections extends React.Component {
 		const p3 = detection.boundingPoly.vertices[2];
 
 		if (p1.x > p0.x && Math.abs(p1.x - p0.x) > Math.abs(p1.x - p3.x)) {
-			console.log("0 1\n3 2");
+			// console.log("0 1\n3 2");
 			return "right side up";
 		}
 		
@@ -46,7 +46,7 @@ class ImageDetections extends React.Component {
 			}
 				
 			if (p2.x > p1.x && Math.abs(p2.x - p1.x) > Math.abs(p1.x - p0.x)) {
-				console.log("1 2\n0 3");
+				// console.log("1 2\n0 3");
 				return "rotated left";
 			}
 				
@@ -81,7 +81,7 @@ class ImageDetections extends React.Component {
 
 			if (rotation !== "right side up") {
 				if (rotation === "rotated left") {
-					console.log("correcting left rotation");
+					// console.log("correcting left rotation");
 					topProp = xLeft;
                     leftProp = this.props.imageWidth - yBottom;
                     heightProp = xRight - xLeft;
@@ -121,7 +121,6 @@ class ImageDetections extends React.Component {
 			const adjustedLeft = (leftProp / this.props.imageWidth) * adjustedImageWidth;
 			const adjustedHeight = (heightProp / this.props.imageHeight) * adjustedImageHeight;
 			const adjustedWidth = (widthProp / this.props.imageWidth) * adjustedImageWidth;
-			console.log("adjustedLeft", adjustedLeft, "adjustedWidth", adjustedWidth);
 
 			return (
 				<div key={detection.description + topProp}>
@@ -130,7 +129,7 @@ class ImageDetections extends React.Component {
 						placement='top'
 						overlay={popover}
 					>
-						<div className="text-overlay" style={{ top: adjustedTop, left: adjustedLeft, height: adjustedHeight, width: adjustedWidth }}></div>
+						<div key={adjustedTop + "-text-overlay"} className="text-overlay" style={{ top: adjustedTop, left: adjustedLeft, height: adjustedHeight, width: adjustedWidth }}></div>
 					</OverlayTrigger>
 				</div>
 			);
@@ -144,7 +143,7 @@ class ImageDetections extends React.Component {
 			<div className="ImageDetections">
 				<div className="img-box">
 					{this.renderDetectionsOnImage()}
-					<img src={URL.createObjectURL(this.props.images[0])} height={window.innerHeight} top="0px" />
+					<img key="original-image" src={URL.createObjectURL(this.props.images[0])} height={window.innerHeight} top="0px" />
 				</div>
 			</div>
 		);
