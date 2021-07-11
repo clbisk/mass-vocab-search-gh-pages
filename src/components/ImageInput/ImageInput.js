@@ -2,8 +2,9 @@ import axios from 'axios';
 import React from 'react';
 import ImageDetections from '../ImageDetections/ImageDetections';
 import './ImageInput.scss';
-import YANDEX_API_KEY from '../../yandex_key.json';
 import DEEPL_API_KEY from '../../deepL_api_key.json';
+import { parseDefinition } from '../../WiktionaryParser.ts';
+import { parseData } from '../../WiktionaryParser';
 
 class ImageInput extends React.Component {
     constructor() {
@@ -79,23 +80,24 @@ class ImageInput extends React.Component {
                         if (hasRoot !== -1) {
                             const rootStart = innerDefs[0].definition.slice(hasRoot + rootTag.length);
                             root = rootStart.slice(0, rootStart.indexOf('#Russian'));
+                            // console.log("the root of", text, "using", def, "is", root);
                             return;
                         }
                         const isDetail = def.indexOf(rootDetailTag);
                         const isLetter = def.indexOf(letterTag);
-                        if (isDetail === -1 || isLetter === -1) return;
-                        return def;
+                        if (isDetail !== -1 || isLetter !== -1) return;
+                        return parseDefinition(def);
                     });
 
-                    return innerDef;
+                    return innerDef.filter(val => val !== undefined && val.length > 0);
                 });
 
-                Object.assign(detection, {root: partOfSpeech, definitions: defs.filter(val => val !== undefined), root: root});
+                Object.assign(detection, {root: partOfSpeech, definitions: defs.filter(val => val !== undefined && val.length > 0), root: root});
                 return detection;
 
             }).catch(function(error) {
                 //definition not found
-                if (error.response.status === 404) return;
+                if (error.response && error.response.status === 404) return;
 
                 console.error(error);
             });
@@ -108,11 +110,11 @@ class ImageInput extends React.Component {
 
                 if (detection.root !== null) {
                     return axios.get(`https://en.wiktionary.org/api/rest_v1/page/definition/${detection.root}?redirect=false`).then(result => {
-                        Object.assign(detection, { rootDefinitions: result });
+                        Object.assign(detection, { rootDefinitions: parseData(result.data.ru) });
                         return detection;
                     }).catch(function(error) {
                         //definition not found
-                        if (error.response.status === 404) return;
+                        if (error.response && error.response.status === 404) return detection;
                         
                         console.error(error);
                     });

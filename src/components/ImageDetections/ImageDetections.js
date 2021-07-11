@@ -9,17 +9,27 @@ class ImageDetections extends React.Component {
 	}
 
 	renderDefinition(detection) {
-		if (detection.definitions) {
-			const defnsList = detection.definitions.map(defs => {
-				defs.map(def => {
+		if (detection.definitions && detection.definitions.length > 0) {
+			// console.log("detection", detection);
+			const directDefns = detection.definitions.map(defs => {
+				// console.log("Direct definitions of", detection.description, defs);
+				const innerDefnsList = defs.map(def => {
 					if (def === undefined) return;
-					console.log("def", def);
-					return (<li>{def}</li>);
-				})
+					return (<li key={def}>{def}</li>);
+				});
+				return (<>{innerDefnsList}</>);
 			});
+			const rootDefnList = detection.rootDefinitions?
+				detection.rootDefinitions.map(item => {
+					const defns = item;
+					return defns.map(def => (<li key={def.definition}>{def.definition}</li>));
+				}) : null;
+			const rootDefn = (<div key={"conjugation-of-" + detection.root}><div className="conjugation-of">Conjugation of {detection.root}</div>{rootDefnList}</div>);
+
+			const defnsList = rootDefn? (<>{directDefns}{rootDefn}</>) : (<>{directDefns}</>);
 			return (<><div className="part-of-speech">{detection.partOfSpeech}</div><ol>{defnsList}</ol></>);
 
-		} else if (detection.definition.translations.length > 0) {
+		} else if (detection.definition && detection.definition.translations.length > 0) {
 			if (detection.definition.translations[0] === '' || detection.definition.translations[0] === undefined) return ("no definition found :(")
 			const defnsList = detection.definition.translations.map(tr => {
 				return (<li>{tr.text}</li>);
@@ -130,7 +140,7 @@ class ImageDetections extends React.Component {
 						placement='top'
 						overlay={popover}
 					>
-						<div className="text-overlay" style={{ top: adjustedTop, left: adjustedLeft, height: adjustedHeight, width: adjustedWidth }}></div>
+						<div className="text-overlay" key={detection.description + "-text-overlay"} style={{ top: adjustedTop, left: adjustedLeft, height: adjustedHeight, width: adjustedWidth }}></div>
 					</OverlayTrigger>
 				</div>
 			);
