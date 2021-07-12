@@ -4,8 +4,52 @@ import Popover from 'react-bootstrap/Popover';
 import './ImageDetections.scss';
 
 class ImageDetections extends React.Component {
-	constructor() {
-		super();
+	renderPartOfSpeech(detection) {
+		const conjugations = detection.partOfSpeech === "Verb"? (
+			<div className="conjugations">
+				{detection.aspect !== ""? (<div key="aspect">{detection.aspect}</div>) : null}
+				{detection.form === "Short form"? (<div key="form">Short Form</div>) : null}
+				{detection.mood === "Imperative"? (<div key="mood">Imperative</div>) : null}
+				<div key="number/person">{this.getPronoun(detection)}</div>
+				{detection.tense !== ""? (<div key="tense">{detection.tense}</div>) : null}
+				{detection.voice !== ""? (<div key="voice">{detection.voice}</div>) : null}
+			</div>
+		) : detection.partOfSpeech === "Noun"? (
+			<div className="conjugations">
+				{detection.case !== ""? (<div key="case">{detection.case}</div>) : null}
+				{detection.gender !== ""? (<div key="gender">{detection.gender}</div>) : null}
+				{detection.number !== ""? (<div key="number">{detection.number}</div>) : null}
+			</div>
+		) : detection.partOfSpeech === "Adjective"? (
+			<div className="conjugations">
+				{detection.case !== ""? (<div key="case">{detection.case}</div>) : null}
+				{detection.gender !== ""? (<div key="gender">{detection.gender}</div>) : null}
+				{detection.number !== "Plural"? (<div key="number">Plural</div>) : null}
+			</div>
+		) : null;
+
+		return (
+			<div className="context">
+				<div className="part-of-speech">{detection.partOfSpeech}</div>
+				{conjugations}
+			</div>
+		);
+	}
+
+	getPronoun(detection) {
+		if (detection.person === "First") {
+			if (detection.number === "Singular") return "Я"
+			return "Мы";
+		} else if (detection.person === "Second") {
+			if (detection.number === "Singular") return "Ты";
+			return "Вы";
+		} else if (detection.person === "Third") {
+			if (detection.number === "Singular") return "Он/Она/Оно";
+			return "Они";
+		} else {
+			if (detection.number === "Singular") return "Reflexive (singular)";
+			return "Reflexive (plural)";
+		}
 	}
 
 	renderDefinition(detection) {
@@ -109,7 +153,9 @@ class ImageDetections extends React.Component {
 				<Popover className="dynamic-text-size" id={detection.description} key={detection.description + topProp + "-popover"}>
 					<Popover.Title className="large-dynamic-text-size">{detection.description}</Popover.Title>
 					<Popover.Content>
-						{this.renderDefinition(detection)}
+						{this.renderPartOfSpeech(detection)}
+						{detection.lemma !== detection.description? (<div className="conjugation-of"><div>Conjugation of</div><div className="lemma">{detection.lemma}</div></div>) : null}
+						<div className="lemma-definition">{this.renderDefinition(detection)}</div>
 					</Popover.Content>
 				</Popover>
 			);

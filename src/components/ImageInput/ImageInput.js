@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import ImageDetections from '../ImageDetections/ImageDetections';
-import { searchDefinitions } from './DefinitionSearch';
+import { searchDefinitions } from '../ImageDetections/DefinitionSearch';
 import './ImageInput.scss';
 
 class ImageInput extends React.Component {

@@ -12,15 +12,63 @@
     .text-overlay {
         position: absolute;
         border: solid;
-        border-color: red;
+        border-color: white;
+        border-radius: 10px;
+        background-color: white;
+        opacity: 0.2;
         z-index: 1;
     }
 }
 
 .dynamic-text-size {
     font-size: 2vh;
+    width: auto;
 }
 
 .large-dynamic-text-size {
     font-size: 5vh;
+}
+
+.popover {
+    max-width: 100%;
+}
+
+.conjugation-of {
+    display: flex;
+    flex-flow: row;
+    margin-top: 10px;
+    align-items: baseline;
+
+    .lemma {
+        font-size: 3vh;
+        margin-left: 1vh;
+    }
+}
+
+.lemma-definition {
+    font-size: 2vh;
+}
+
+.part-of-speech {
+    color: gray;
+    font-size: 3vh;
+}
+
+ol li {
+    font-size: 3vh;
+}
+
+.conjugations {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+
+    div {
+        background-color: lightblue;
+        border-radius: 25px;
+        padding: 5px 10px;
+        margin-right: 2px;
+        margin-bottom: 5px;
+    }
 }
