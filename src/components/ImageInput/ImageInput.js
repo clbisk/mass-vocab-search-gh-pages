@@ -3,6 +3,7 @@ import React from 'react';
 import ImageDetections from '../ImageDetections/ImageDetections';
 import { searchDefinitions } from '../ImageDetections/DefinitionSearch';
 import './ImageInput.scss';
+import { Link } from '@material-ui/core';
 
 class ImageInput extends React.Component {
     constructor() {
@@ -10,6 +11,11 @@ class ImageInput extends React.Component {
         this.state = { img_files: null, img_buffers: null, imagesInput: false, imagesParsed: false, textDetections: null, definedDetections: null, detectionsLoaded: false, imageWidth: 0, imageHeight: 0 };
         this.changeImage = this.changeImage.bind(this);
         this.setImageProps = this.setImageProps.bind(this);
+    }
+
+    componentDidCatch(error, info) {
+        console.log(error, info);
+        this.setState({ errorOccurred: true });
     }
 
     changeImage(event) {
@@ -51,21 +57,32 @@ class ImageInput extends React.Component {
     }
 
     async getOCR() {
-        return axios.post(`https://us-east4-true-bit-315318.cloudfunctions.net/documentTextDetection`, { img: this.state.img_buffers[0] }).then(result => {
+        return axios.post(`https://us-east4-true-bit-315318.cloudfunctions.net/documentTextDetection`, { img: this.state.img_buffers[0], lang: "ru" }).then(result => {
             this.setState({ textDetections: result.data.textAnnotations, fullText: result.data.fullTextAnnotation }, this.getDefinitions);
-        });
+        }).catch(err => {
+            console.log("an error occurred during OCR; trying again", err);
+            this.getOCR();
+        })
     }
 
     async getDefinitions() {
-        searchDefinitions(this.state.textDetections).then(results => {
+        searchDefinitions(this.state.textDetections, 'ru').then(results => {
             this.setState({ definedDetections: results, detectionsLoaded: true });
+        }).catch(error => {
+            console.error(error);
+            this.setState({ errorOccurred: true });
         });
     }
 
     render() {
-        return this.state.detectionsLoaded ? (
+        return this.state.errorOccurred ? (
             <div className="ImageInput">
-                <ImageDetections detections={this.state.definedDetections} images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} />
+                <div>An error occured while trying to parse this image. :(</div>
+                <Link to="/img">Try Again</Link>
+            </div>
+        ) : this.state.detectionsLoaded ? (
+            <div className="ImageInput">
+                <ImageDetections detections={this.state.definedDetections} lang="ru" images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} />
             </div>
         ) : this.state.imagesParsed ? (
             <div className="ImageInput">

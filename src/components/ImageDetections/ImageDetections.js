@@ -10,7 +10,7 @@ class ImageDetections extends React.Component {
 				{detection.aspect !== ""? (<div key="aspect">{detection.aspect}</div>) : null}
 				{detection.form === "Short form"? (<div key="form">Short Form</div>) : null}
 				{detection.mood === "Imperative"? (<div key="mood">Imperative</div>) : null}
-				<div key="number/person">{this.getPronoun(detection)}</div>
+				<div key="number/person">{this.props.lang === "ru"? this.getPronoun(detection) : (<div key="person">{detection.person}</div>)}</div>
 				{detection.tense !== ""? (<div key="tense">{detection.tense}</div>) : null}
 				{detection.voice !== ""? (<div key="voice">{detection.voice}</div>) : null}
 			</div>
@@ -59,7 +59,7 @@ class ImageDetections extends React.Component {
 			});
 			return (<ol key={detection.description + detection.boundingPoly.vertices[0] + "list"}>{defnsList}</ol>);
 
-		} else if (detection.definition.translations.length > 0) {
+		} else if (detection.definition.translations && detection.definition.translations.length > 0) {
 			if (detection.definition.translations[0] === '' || detection.definition.translations[0] === undefined) return ("no definition found :(")
 			const defnsList = detection.definition.translations.map(tr => {
 				return (<li key={tr.text + detection.boundingPoly.vertices[0]}>{tr.text}</li>);
