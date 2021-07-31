@@ -11,6 +11,7 @@ class ImageInput extends React.Component {
         this.state = { img_files: null, img_buffers: null, imagesInput: false, imagesParsed: false, textDetections: null, definedDetections: null, detectionsLoaded: false, imageWidth: 0, imageHeight: 0 };
         this.changeImage = this.changeImage.bind(this);
         this.setImageProps = this.setImageProps.bind(this);
+        this.restartSearch = this.restartSearch.bind(this);
     }
 
     componentDidCatch(error, info) {
@@ -74,6 +75,10 @@ class ImageInput extends React.Component {
         });
     }
 
+    restartSearch() {
+        this.setState({ img_files: null, img_buffers: null, imagesInput: false, imagesParsed: false, textDetections: null, definedDetections: null, detectionsLoaded: false, imageWidth: 0, imageHeight: 0 });
+    }
+
     render() {
         return this.state.errorOccurred ? (
             <div className="ImageInput">
@@ -82,7 +87,7 @@ class ImageInput extends React.Component {
             </div>
         ) : this.state.detectionsLoaded ? (
             <div className="ImageInput">
-                <ImageDetections detections={this.state.definedDetections} lang="ru" images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} />
+                <ImageDetections restartSearch={this.restartSearch} detections={this.state.definedDetections} lang="ru" images={this.state.img_files} imageWidth={this.state.imageWidth} imageHeight={this.state.imageHeight} fullText={this.state.fullText} />
             </div>
         ) : this.state.imagesParsed ? (
             <div className="ImageInput">

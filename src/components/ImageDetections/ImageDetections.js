@@ -193,7 +193,7 @@ class ImageDetections extends React.Component {
 					<img key="original-image" src={URL.createObjectURL(this.props.images[0])} height={window.innerHeight} top="0px" />
 				</div>
 
-				<button><Link to="/img">Back to Search</Link></button>
+				<button className="back-button" onClick={this.props.restartSearch}>Back to Search</button>
 			</div>
 		);
 	}
