@@ -2,6 +2,7 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import './ImageDetections.scss';
+import { Link } from 'react-router-dom';
 
 class ImageDetections extends React.Component {
 	renderPartOfSpeech(detection) {
@@ -134,18 +135,18 @@ class ImageDetections extends React.Component {
 
 				if (rotation === "rotated right") {
 					console.log("correcting right rotation");
-					topProp = xLeft;
-                    leftProp = this.props.imageWidth - yBottom;
+					topProp = this.props.imageWidth - xRight;
+                    leftProp = yTop;
                     heightProp = xRight - xLeft;
                     widthProp = yBottom - yTop;
 				}
 
 				if (rotation === "upside-down") {
 					console.log("correcting upside-down rotation");
-					topProp = xLeft;
-                    leftProp = this.props.imageWidth - yBottom;
-                    heightProp = xRight - xLeft;
-                    widthProp = yBottom - yTop;
+					topProp = this.props.imageHeight - yTop;
+                    leftProp = this.props.imageWidth - xRight;
+                    heightProp = yBottom - yTop;
+                    widthProp = xRight - xLeft;
 				}
 			}
 
@@ -191,6 +192,8 @@ class ImageDetections extends React.Component {
 					{this.renderDetectionsOnImage()}
 					<img key="original-image" src={URL.createObjectURL(this.props.images[0])} height={window.innerHeight} top="0px" />
 				</div>
+
+				<button><Link to="/img">Back to Search</Link></button>
 			</div>
 		);
 	}

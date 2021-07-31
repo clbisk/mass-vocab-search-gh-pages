@@ -21,8 +21,7 @@ async function addLemmasToDetections(detections: Array<any>, language: string): 
     try {
         const contexts: Array<any> = await lemmatize(detections, language);
 
-        console.log(contexts.length);
-        console.log(detections.length);
+        if (contexts.length + 1 != detections.length) throw Error("the amount of words detected and the amount of words lemmatized are different...");
 
         const lemmatizedDetections = contexts.map((context, i) => {
             const partOfSpeech: keyof typeof Tag = context.partOfSpeech.tag;

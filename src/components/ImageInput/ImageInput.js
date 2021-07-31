@@ -3,7 +3,7 @@ import React from 'react';
 import ImageDetections from '../ImageDetections/ImageDetections';
 import { searchDefinitions } from '../ImageDetections/DefinitionSearch';
 import './ImageInput.scss';
-import { Link } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 class ImageInput extends React.Component {
     constructor() {
@@ -78,7 +78,7 @@ class ImageInput extends React.Component {
         return this.state.errorOccurred ? (
             <div className="ImageInput">
                 <div>An error occured while trying to parse this image. :(</div>
-                <Link to="/img">Try Again</Link>
+                <button><Link to="/img">Try Again</Link></button>
             </div>
         ) : this.state.detectionsLoaded ? (
             <div className="ImageInput">
