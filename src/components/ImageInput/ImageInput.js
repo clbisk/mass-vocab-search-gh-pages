@@ -80,7 +80,7 @@ class ImageInput extends React.Component {
     }
 
     render() {
-        const header = (<div className="title"><h1>Mass Vocab Search: Image Search</h1></div>);
+        const header = (<div className="title"><h1>Image Search</h1></div>);
 
         return this.state.errorOccurred ? (
             <div className="ImageInput">
