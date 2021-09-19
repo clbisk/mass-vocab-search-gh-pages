@@ -80,8 +80,11 @@ class ImageInput extends React.Component {
     }
 
     render() {
+        const header = (<div className="title"><h1>Mass Vocab Search: Image Search</h1></div>);
+
         return this.state.errorOccurred ? (
             <div className="ImageInput">
+                {header}
                 <div>An error occured while trying to parse this image. :(</div>
                 <button><Link to="/img">Try Again</Link></button>
             </div>
@@ -91,6 +94,7 @@ class ImageInput extends React.Component {
             </div>
         ) : this.state.imagesParsed ? (
             <div className="ImageInput">
+                {header}
                 Loading image text...
                 <div>
                     <img src={this.state.img_buffers[0]} height={0.5 * window.innerHeight}></img>
@@ -98,7 +102,8 @@ class ImageInput extends React.Component {
             </div>
         ) : (
             <div className="ImageInput">
-               <div><input type='file' id='single' onChange={this.changeImage} /></div>
+                <div className="up-top">{header}<div className="instructions">Please upload an image containing the Russian text to be defined.</div></div>
+                <div><input type='file' id='single' onChange={this.changeImage} /></div>
             </div>
         );
     }
