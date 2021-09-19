@@ -2,7 +2,6 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import './ImageDetections.scss';
-import { Link } from 'react-router-dom';
 
 class ImageDetections extends React.Component {
 	renderPartOfSpeech(detection) {
